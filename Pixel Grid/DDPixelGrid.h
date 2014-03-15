@@ -1,10 +1,12 @@
 //
-//  DDPixelGridAppDelegate.h
+//  DDPixelGrid.h
 //  Pixel Grid
 //
 //  Created by Daniel Drzimotta on 2014-02-25.
 //  Copyright (c) 2014 Daniel Drzimotta. All rights reserved.
 //
+
+#import <UIKit/UIKit.h>
 
 /**
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -26,10 +28,37 @@
  THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
+@interface DDPixelGridColorSpace : NSObject {
+@public GLubyte colorSpace[30][3];
+}
+@end
 
-@interface DDPixelGridAppDelegate : UIResponder <UIApplicationDelegate>
+@interface DDPixelGridColorSpaceRainbow : DDPixelGridColorSpace
+@end
 
-@property (strong, nonatomic) UIWindow *window;
+@interface DDPixelGridColorSpaceFire : DDPixelGridColorSpace
+@end
+
+@interface DDPixelGridColorSpaceIce : DDPixelGridColorSpace
+@end
+
+@interface DDPixelGridColorSpaceEmerald : DDPixelGridColorSpace
+@end
+
+@interface DDPixelGrid : UIView
+
+@property (strong, nonatomic) DDPixelGridColorSpace *colorSpace;
+
+// This is used to draw from. You can set this and it will draw using the
+// proper color space. If you have something new to draw you should call this
+// first.
+- (void)setWidth:(int)arrayWidth height:(int)arrayHeight typesOfCells:(int)typesOfCells;
+
+// This allows you to set a 'pixel' with the given value in the color space.
+// Will not actually draw anything. You must call 'drawView' first.
+- (void)updateForX:(int)column y:(int)row newColorValue:(int)value;
+
+// Call this whenever you want the view to redraw...
+- (void)drawView;
 
 @end
